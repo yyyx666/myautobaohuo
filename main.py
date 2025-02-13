@@ -46,12 +46,12 @@ def execute_ssh_commands(hostname, port, username, password, commands):
 
 
 def startApp():
-    hostname = os.environ.get("hostname")
-    port = int(os.environ.get("port", "22"))
+    hostname = os.environ.get("HOSTNAME")
+    port = int(os.environ.get("PORT", "22"))
 
-    username = os.environ.get("username")
-    password = os.environ.get("password")
-    commands = os.environ.get("command")
+    username = os.environ.get("USERNAME")
+    password = os.environ.get("PASSWORD")
+    commands = os.environ.get("COMMAND")
 
     output, error = execute_ssh_commands(hostname, port, username, password, commands)
 
@@ -63,7 +63,7 @@ def startApp():
 
 # 示例调用
 if __name__ == "__main__":
-    url = os.environ.get("url")
+    url = os.environ.get("URL")
     resp = requests.request("get", url)
 
     if resp.status_code == 200:
