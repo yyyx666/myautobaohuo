@@ -1,10 +1,11 @@
 # encoding: utf-8
 import os
+import json
 
 import paramiko
 import requests
 
-
+CONFIGS = json.loads(os.environ["CONFIGS"])
 def execute_ssh_commands(hostname, port, username, password, commands):
     """
     连接到SSH服务器并执行多条命令。
@@ -46,12 +47,12 @@ def execute_ssh_commands(hostname, port, username, password, commands):
 
 
 def startApp():
-    hostname = os.environ.get("HOSTNAME")
-    port = int(os.environ.get("PORT", "22"))
+    hostname = CONFIGS.get("HOSTNAME")
+    port = int(CONFIGS.get("PORT", "22"))
 
-    username = os.environ.get("USERNAME")
-    password = os.environ.get("PASSWORD")
-    commands = os.environ.get("COMMAND")
+    username = CONFIGS.get("USERNAME")
+    password = CONFIGS.get("PASSWORD")
+    commands = CONFIGS.get("COMMAND")
 
     output, error = execute_ssh_commands(hostname, port, username, password, commands)
 
@@ -63,7 +64,7 @@ def startApp():
 
 # 示例调用
 if __name__ == "__main__":
-    url = os.environ.get("URL")
+    url = CONFIGS.get("URL")
     resp = requests.request("get", url)
 
     if resp.status_code == 200:

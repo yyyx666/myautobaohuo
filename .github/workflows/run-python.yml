@@ -24,5 +24,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Python script
+      env:
+        CONFIGS: ${{ secrets.hostname }}
       run: |
         python main.py
