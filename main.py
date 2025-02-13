@@ -65,14 +65,14 @@ def startApp():
 # 示例调用
 if __name__ == "__main__":
     print(CONFIGS)
-    url = CONFIGS.get("URL")
-    resp = requests.request("get", url)
-
-    if resp.status_code == 200:
-        print("状态正常")
-    else:
-        print("状态异常：" + str(resp.status_code))
-
-    if resp.status_code == 502:
-        print("前往启动服务")
-        startApp()
+    # url = CONFIGS.get("URL")
+    # resp = requests.request("get", url)
+    #
+    # if resp.status_code == 200:
+    #     print("状态正常")
+    # else:
+    #     print("状态异常：" + str(resp.status_code))
+    #
+    # if resp.status_code == 502:
+    #     print("前往启动服务")
+    #     startApp()
