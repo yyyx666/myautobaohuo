@@ -25,6 +25,11 @@ jobs:
 
     - name: Run Python script
       env:
-        CONFIGS: ${{ secrets.HOSTNAME }}
+        URL: ${{ secrets.URL }}
+        COMMAND: ${{ secrets.COMMAND }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        HOSTNAME: ${{ secrets.HOSTNAME }}
       run: |
         python main.py

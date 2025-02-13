@@ -1,11 +1,10 @@
 # encoding: utf-8
 import os
-import json
 
 import paramiko
 import requests
 
-CONFIGS = os.environ["CONFIGS"]
+
 def execute_ssh_commands(hostname, port, username, password, commands):
     """
     连接到SSH服务器并执行多条命令。
@@ -47,12 +46,12 @@ def execute_ssh_commands(hostname, port, username, password, commands):
 
 
 def startApp():
-    hostname = CONFIGS.get("HOSTNAME")
-    port = int(CONFIGS.get("PORT", "22"))
+    hostname = os.environ.get("HOSTNAME")
+    port = int(os.environ.get("PORT", "22"))
 
-    username = CONFIGS.get("USERNAME")
-    password = CONFIGS.get("PASSWORD")
-    commands = CONFIGS.get("COMMAND")
+    username = os.environ.get("USERNAME")
+    password = os.environ.get("PASSWORD")
+    commands = os.environ.get("COMMAND")
 
     output, error = execute_ssh_commands(hostname, port, username, password, commands)
 
@@ -64,15 +63,14 @@ def startApp():
 
 # 示例调用
 if __name__ == "__main__":
-    print(CONFIGS)
-    # url = CONFIGS.get("URL")
-    # resp = requests.request("get", url)
-    #
-    # if resp.status_code == 200:
-    #     print("状态正常")
-    # else:
-    #     print("状态异常：" + str(resp.status_code))
-    #
-    # if resp.status_code == 502:
-    #     print("前往启动服务")
-    #     startApp()
+    url = os.environ.get("URL")
+    resp = requests.request("get", url)
+
+    if resp.status_code == 200:
+        print("状态正常")
+    else:
+        print("状态异常：" + str(resp.status_code))
+
+    if resp.status_code == 502:
+        print("前往启动服务")
+        startApp()
