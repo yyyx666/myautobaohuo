@@ -64,7 +64,7 @@ def startApp():
 
 # 示例调用
 if __name__ == "__main__":
-    print(os.environ["secrets.HOSTNAME"])
+    print(CONFIGS)
     # url = CONFIGS.get("URL")
     # resp = requests.request("get", url)
     #

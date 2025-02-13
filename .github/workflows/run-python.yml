@@ -25,6 +25,6 @@ jobs:
 
     - name: Run Python script
       env:
-        CONFIGS: ${{ secrets.hostname }}
+        CONFIGS: ${{ secrets.HOSTNAME }}
       run: |
         python main.py
