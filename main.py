@@ -5,7 +5,7 @@ import json
 import paramiko
 import requests
 
-CONFIGS = json.loads(os.environ["CONFIGS"])
+CONFIGS = os.environ["CONFIGS"]
 def execute_ssh_commands(hostname, port, username, password, commands):
     """
     连接到SSH服务器并执行多条命令。
