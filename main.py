@@ -1,50 +1,53 @@
+# encoding: utf-8
 import os
 
 import paramiko
 import requests
 
+
 def execute_ssh_commands(hostname, port, username, password, commands):
     """
-    Á¬½Óµ½SSH·şÎñÆ÷²¢Ö´ĞĞ¶àÌõÃüÁî¡£
-    :param hostname: SSH·şÎñÆ÷µÄÖ÷»úÃû»òIPµØÖ·
-    :param port: SSH·şÎñÆ÷µÄ¶Ë¿ÚºÅ£¬Ä¬ÈÏÊÇ22
-    :param username: µÇÂ¼SSH·şÎñÆ÷µÄÓÃ»§Ãû
-    :param password: µÇÂ¼SSH·şÎñÆ÷µÄÃÜÂë
-    :param commands: ÒªÔÚÔ¶³Ì·şÎñÆ÷ÉÏÖ´ĞĞµÄÃüÁîÁĞ±í
-    :return: ÃüÁîµÄÊä³öºÍ´íÎóĞÅÏ¢
+    è¿æ¥åˆ°SSHæœåŠ¡å™¨å¹¶æ‰§è¡Œå¤šæ¡å‘½ä»¤ã€‚
+    :param hostname: SSHæœåŠ¡å™¨çš„ä¸»æœºåæˆ–IPåœ°å€
+    :param port: SSHæœåŠ¡å™¨çš„ç«¯å£å·ï¼Œé»˜è®¤æ˜¯22
+    :param username: ç™»å½•SSHæœåŠ¡å™¨çš„ç”¨æˆ·å
+    :param password: ç™»å½•SSHæœåŠ¡å™¨çš„å¯†ç 
+    :param commands: è¦åœ¨è¿œç¨‹æœåŠ¡å™¨ä¸Šæ‰§è¡Œçš„å‘½ä»¤åˆ—è¡¨
+    :return: å‘½ä»¤çš„è¾“å‡ºå’Œé”™è¯¯ä¿¡æ¯
     """
     try:
-        # ´´½¨SSH¿Í»§¶Ë¶ÔÏó
+        # åˆ›å»ºSSHå®¢æˆ·ç«¯å¯¹è±¡
         ssh = paramiko.SSHClient()
 
-        # ×Ô¶¯Ìí¼ÓÖ÷»úÃÜÔ¿
+        # è‡ªåŠ¨æ·»åŠ ä¸»æœºå¯†é’¥
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        # Á¬½Óµ½SSH·şÎñÆ÷
+        # è¿æ¥åˆ°SSHæœåŠ¡å™¨
         ssh.connect(hostname=hostname, port=port, username=username, password=password)
 
-        # ½«ÃüÁîÁĞ±í×éºÏ³ÉÒ»¸ö×Ö·û´®£¬Ã¿ÌõÃüÁîÖ®¼äÓÃ·ÖºÅ·Ö¸ô
+        # å°†å‘½ä»¤åˆ—è¡¨ç»„åˆæˆä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œæ¯æ¡å‘½ä»¤ä¹‹é—´ç”¨åˆ†å·åˆ†éš”
         command_string = commands
 
-        # Ö´ĞĞÃüÁî
+        # æ‰§è¡Œå‘½ä»¤
         stdin, stdout, stderr = ssh.exec_command(command_string)
 
-        # »ñÈ¡ÃüÁîÊä³öºÍ´íÎóĞÅÏ¢
+        # è·å–å‘½ä»¤è¾“å‡ºå’Œé”™è¯¯ä¿¡æ¯
         output = stdout.read().decode()
         error = stderr.read().decode()
 
-        # ¹Ø±ÕSSHÁ¬½Ó
+        # å…³é—­SSHè¿æ¥
         ssh.close()
 
-        # ·µ»ØÊä³öºÍ´íÎóĞÅÏ¢
+        # è¿”å›è¾“å‡ºå’Œé”™è¯¯ä¿¡æ¯
         return output, error
 
     except Exception as e:
         return None, str(e)
 
+
 def startApp():
     hostname = os.environ.get("hostname")
-    port = int(os.environ.get("port","22"))
+    port = int(os.environ.get("port", "22"))
 
     username = os.environ.get("username")
     password = os.environ.get("password")
@@ -57,16 +60,17 @@ def startApp():
     else:
         print("Output:", output)
 
-# Ê¾Àıµ÷ÓÃ
+
+# ç¤ºä¾‹è°ƒç”¨
 if __name__ == "__main__":
     url = os.environ.get("url")
-    resp = requests.request("get",url)
+    resp = requests.request("get", url)
 
     if resp.status_code == 200:
-        print("×´Ì¬Õı³£")
+        print("çŠ¶æ€æ­£å¸¸")
     else:
-        print("×´Ì¬Òì³££º" + str(resp.status_code))
+        print("çŠ¶æ€å¼‚å¸¸ï¼š" + str(resp.status_code))
 
     if resp.status_code == 502:
-        print("Ç°ÍùÆô¶¯·şÎñ")
+        print("å‰å¾€å¯åŠ¨æœåŠ¡")
         startApp()
