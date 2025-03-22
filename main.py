@@ -71,6 +71,6 @@ if __name__ == "__main__":
     else:
         print("状态异常：" + str(resp.status_code))
 
-    if resp.status_code == 502:
+    if resp.status_code == 502 or resp.status_code == 521:
         print("前往启动服务")
         startApp()
